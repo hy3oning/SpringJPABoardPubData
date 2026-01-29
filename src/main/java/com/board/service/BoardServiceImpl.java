@@ -62,8 +62,20 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Board> search(String searchType, String keyword) throws Exception {
-		return null;
+		// searchType = {content, writer, title}
+		if (keyword == null)
+			keyword = "";
+		if (searchType.equals("content")) {
+			return boardRepository.findByContentContaining(keyword);
+		} else if (searchType.equals("writer")) {
+			return boardRepository.findByWriterContaining(keyword);
+		} else if (searchType.equals("title")) {
+			return boardRepository.findByTitleContaining(keyword);
+		} else {
+			return boardRepository.findByTitleContaining(keyword);
+		}
 	}
 
 }
