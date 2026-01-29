@@ -33,7 +33,7 @@ public class BoardController {
 		try {
 			int count = boardService.register(board);
 			if (count > 0) {
-				model.addAttribute("message", "%s님 가입축하합니다.".formatted(board.getWriter()));
+				model.addAttribute("message", "%s님의 글이 작성되었습니다.".formatted(board.getWriter()));
 				return "board/success";
 			}
 		} catch (Exception e) {
