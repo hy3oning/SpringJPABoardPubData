@@ -13,24 +13,28 @@ import com.board.repository.BoardRepository;
 public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
-	
+
 	@Override
 	@Transactional
 	public int register(Board b) throws Exception {
 		Board board = boardRepository.save(b);
-		return board != null ? 1: 0;
+		return (board != null) ? 1 : 0;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Board read(Board board) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return boardRepository.getReferenceById(board.getNo());
 	}
 
 	@Override
-	public int modify(Board board) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	@Transactional
+	public int modify(Board b) throws Exception {
+		Board board = boardRepository.getReferenceById(b.getNo());
+		board.setTitle(b.getTitle());
+		board.setContent(b.getContent());
+		board.setWriter(b.getWriter());
+		return (board != null) ? 1 : 0;
 	}
 
 	@Override
